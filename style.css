@@ -1,0 +1,67 @@
+/* Primary color theme override */
+:root {
+  --bs-primary: #05445e;
+  --bs-primary-rgb: 5, 68, 94;
+}
+
+/* Page layout */
+body {
+    background: #f9fafb;
+    background-color: #f8f9fa;
+    background-image: radial-gradient(circle at 1px 1px, #e0e0e0 1px, transparent 0);
+    background-size: 24px 24px;
+    font-family: system-ui, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 2rem;
+}
+
+.container-box {
+  max-width: 420px;
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  margin-bottom: 1.5rem;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #05445e !important;
+  border-color: #05445e !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #033649 !important;
+  border-color: #033649 !important;
+  transform: scale(1.02);
+}
+
+/* Success message */
+#success-message {
+  display: none;
+}
+
+/* Text styling */
+p {
+  line-height: 1.6;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .container-box {
+    padding: 1.5rem;
+  }
+}
+
+
+
+
