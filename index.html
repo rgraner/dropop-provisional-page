@@ -35,6 +35,9 @@
     form {
       margin-top: 1rem;
     }
+    #success-message {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -53,7 +56,8 @@
     <p class="mb-3">Want to be notified when we relaunch?</p>
 
     <!-- ✅ Netlify Form -->
-    <form name="dropop-waitlist" method="POST" data-netlify="true" class="needs-validation" novalidate>
+    <form name="dropop-waitlist" method="POST" data-netlify="true" class="needs-validation" novalidate id="waitlist-form" netlify>
+      <input type="hidden" name="form-name" value="dropop-waitlist">
       <div class="mb-3">
         <input type="email" name="email" class="form-control" placeholder="Your email address" required>
         <div class="invalid-feedback">Please enter a valid email.</div>
@@ -61,26 +65,47 @@
       <button type="submit" class="btn btn-primary w-100">Notify Me</button>
     </form>
 
+    <!-- ✅ Success Message -->
+    <div id="success-message" class="alert alert-success mt-4">
+      🎉 Thank you! We’ll notify you when Dropop relaunches.
+    </div>
+
     <p class="mt-4 text-muted" style="font-size: 0.9rem;">
       Thank you for supporting school communities and sustainability 💚
     </p>
   </div>
 
   <script>
-    // Bootstrap validation
+    // Bootstrap validation + Netlify success handling
     (function () {
       'use strict'
-      const forms = document.querySelectorAll('.needs-validation')
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-          form.classList.add('was-validated')
-        }, false)
-      })
-    })()
+      const form = document.getElementById('waitlist-form');
+      const successMessage = document.getElementById('success-message');
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        if (!form.checkValidity()) {
+          event.stopPropagation();
+          form.classList.add('was-validated');
+          return;
+        }
+
+        const formData = new FormData(form);
+
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(formData).toString()
+        })
+        .then(() => {
+          form.reset();
+          form.style.display = "none";
+          successMessage.style.display = "block";
+        })
+        .catch((error) => alert("Oops! Something went wrong. Please try again later."));
+      });
+    })();
   </script>
 </body>
 </html>
